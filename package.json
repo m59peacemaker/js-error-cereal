@@ -1,0 +1,32 @@
+{
+  "name": "@m59/error-cereal",
+  "version": "0.1.0",
+  "description": "Serialize a JavaScript error to a regular, json stringifiable object, and deserialize an object into an error.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node src/index.spec.js"
+  },
+  "keywords": [
+    "error",
+    "serialize",
+    "deserialize",
+    "send",
+    "object",
+    "plain",
+    "json",
+    "string",
+    "stringify",
+    "parse",
+    "JSON.stringify",
+    "JSON.parse"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/m59peacemaker/js-error-cereal"
+  },
+  "author": "Johnny Hauser <johnnyhauser@gmail.com>",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "zora": "^3.0.1"
+  }
+}
