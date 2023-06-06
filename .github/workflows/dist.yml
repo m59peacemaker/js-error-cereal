@@ -3,7 +3,6 @@ on:
   push:
     tags:
       - 'v*'
-      - '!v*-dist'
 jobs:
   dist:
     runs-on: ubuntu-latest
@@ -21,12 +20,6 @@ jobs:
           node-version: 19.x
       - run: npm ci
       - run: npm test
-      - run: |
-          git add --force ./dist
-          TAG="${GITHUB_REF#refs/tags/}-dist"
-          git diff --quiet && git diff --staged --quiet || git commit -m "$TAG"
-          git tag -a "$TAG" -m "$TAG"
-      - run: git push --follow-tags
       - uses: JS-DevTools/npm-publish@v1
         with:
           access: public
