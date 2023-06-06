@@ -5,33 +5,33 @@ Serialize a JavaScript error to a regular, json stringifiable object, and deseri
 ## api
 
 ```js
-const { serializeError, deserializeError } = require('@m59/error-cereal')
+const { serialize_error, deserialize_error } = require('@m59/error-cereal')
 ```
 
-### `serializeError(error)`
+### `serialize_error(error)`
 
 Takes an error instance and returns a regular object that you can stringify with `JSON.stringify`.
 Circular references are replaced with `'[Circular]'`.
 
 ```js
-serializeError(Object.assign(new Error('an error'), { foo: 'bar' }))
+serialize_error(Object.assign(new Error('an error'), { foo: 'bar' }))
 // => { name: 'Error', message: 'an error', stack: 'etc', foo: 'bar' }
 ```
 
-### `deserializeError(object, { customErrorConstructors = {} })`
+### `deserialize_error(object, { custom_error_constructors = {} })`
 
-Takes an object and returns an instance of the error referenced by `{ name }`. This operation is isomorphic with `serializeError` for error instances as they were originally constructed or with added properties when those properties have values that can be converted back to their original.
+Takes an object and returns an instance of the error referenced by `{ name }`. This operation is isomorphic with `serialize_error` for error instances as they were originally constructed or with added properties when those properties have values that can be converted back to their original.
 
 Custom error constructors can be passed in and will be used to construct the error for objects with a matching { name }.
 
 ```js
-deserializeError(
-	{ name: 'MyCustomError', message: 'error message' },
+deserialize_error(
+	{ name: 'My_Custom_Error', message: 'error message' },
 	{
-		customErrorConstructors: {
-			MyCustomError
+		custom_error_constructors: {
+			My_Custom_Error
 		}
 	}
 )
-// => new MyCustomError('error message')
+// => new My_Custom_Error('error message')
 ```

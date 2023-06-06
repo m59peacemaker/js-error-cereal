@@ -1,8 +1,8 @@
-const { test } = require('zora')
-const pick = require('./util/pick')
-const serializeError = require('./serializeError')
+import { test } from 'zora'
+import { pick } from './util/pick.js'
+import { serialize_error } from './serialize_error.js'
 
-test('serializeError', t => {
+test('serialize_error', t => {
 	const error = new Error('very intense error')
 	t.equal(
 		Object.keys(error),
@@ -10,16 +10,16 @@ test('serializeError', t => {
 		'sanity check - error object has no keys'
 	)
 	t.equal(
-		Object.keys(serializeError(error)),
+		Object.keys(serialize_error(error)),
 		[ 'name', 'message', 'stack' ],
 		'serialized error has { name, message, stack }'
 	)
 	t.equal(
-		pick([ 'name', 'message' ], serializeError(error)),
+		pick([ 'name', 'message' ], serialize_error(error)),
 		{ name: 'Error', message: 'very intense error' }
 	)
 	t.doesNotThrow(
-		() => JSON.stringify(serializeError(error)),
+		() => JSON.stringify(serialize_error(error)),
 		'can json stringify serialized error'
 	)
 	t.equal(
@@ -28,16 +28,16 @@ test('serializeError', t => {
 		`sanity check - json stringifying error results in '{}'`
 	)
 	t.notEqual(
-		JSON.stringify(serializeError(error)),
+		JSON.stringify(serialize_error(error)),
 		'{}',
 		`json stringifying serialized error does not result in '{}'`
 	)
-	const extraData = { foo: { bar: 'baz' } }
-	extraData.foo.circular = extraData
+	const extra_data = { foo: { bar: 'baz' } }
+	extra_data.foo.circular = extra_data
 	t.equal(
 		pick(
 			[ 'name', 'message', 'foo' ],
-			serializeError(Object.assign(new Error('detailed error'), extraData))
+			serialize_error(Object.assign(new Error('detailed error'), extra_data))
 		),
 		{
 			name: 'Error',

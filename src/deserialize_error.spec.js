@@ -1,20 +1,20 @@
-const { test } = require('zora')
-const serializeError = require('./serializeError')
-const deserializeError = require('./deserializeError')
-const pick = require('./util/pick')
+import { test } from 'zora'
+import { serialize_error } from './serialize_error.js'
+import { deserialize_error } from './deserialize_error.js'
+import { pick } from './util/pick.js'
 
-test('deserializeError', t => {
+test('deserialize_error', t => {
 	t.ok(
-		deserializeError({ }) instanceof Error,
+		deserialize_error({ }) instanceof Error,
 		'takes an object and returns an error'
 	)
 	t.equal(
-		deserializeError({ name: 'SyntaxError' }).constructor,
+		deserialize_error({ name: 'SyntaxError' }).constructor,
 		SyntaxError,
 		'uses constructor from { name }'
 	)
 	t.throws(
-		() => deserializeError({ name: 'UnfathomableError' }),
+		() => deserialize_error({ name: 'UnfathomableError' }),
 		'throws when { name } refers to unknown constructor'
 	)
 
@@ -25,19 +25,19 @@ test('deserializeError', t => {
 		}
 	}
 	t.ok(
-		deserializeError(
+		deserialize_error(
 			{ name: 'UnfathomableError' },
 			{
-				customErrorConstructors: {
+				custom_error_constructors: {
 					UnfathomableError
 				}
 			}
 		) instanceof UnfathomableError,
-		'uses customErrorConstructors'
+		'uses custom_error_constructors'
 	)
 
 	t.equal(
-		deserializeError({
+		deserialize_error({
 			name: 'Error',
 			foo: {
 				bar: {
@@ -51,7 +51,7 @@ test('deserializeError', t => {
 	t.equal(
 		pick(
 			[ 'name', 'message', 'foo' ],
-			serializeError(deserializeError({
+			serialize_error(deserialize_error({
 				name: 'Error',
 				message: 'an error',
 				foo: { bar: { baz: 123 } }
@@ -62,6 +62,6 @@ test('deserializeError', t => {
 			message: 'an error',
 			foo: { bar: { baz: 123 } }
 		},
-		'deserializeError is isomorphic-ish with serializeError (i.e. non-circular values)'
+		'deserialize_error is isomorphic-ish with serialize_error (i.e. non-circular values)'
 	)
 })

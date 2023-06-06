@@ -3,6 +3,7 @@
   "version": "0.1.1",
   "description": "Serialize a JavaScript error to a regular, json stringifiable object, and deserialize an object into an error.",
   "main": "src/index.js",
+  "type": "module",
   "scripts": {
     "test": "node src/index.spec.js"
   },
